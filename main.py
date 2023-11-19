@@ -6,7 +6,7 @@ import random
 fig, ax = plt.subplots()
 ax.set_xlim([0, 100])
 ax.set_ylim([0, 100])
-
+hdist = 10
 
 class Point(object):
     _id_counter = 0
@@ -63,15 +63,15 @@ class Agent(object):
         for agent in agents:
             if agent.id != self.id:
                 distance = np.sqrt((self.x - agent.x) ** 2 + (self.y - agent.y) ** 2)
-                if distance <= 10:
-                    if agent.steps_since_collisions[1] + 10 < self.steps_since_collisions[1]:
-                        self.steps_since_collisions[1] = agent.steps_since_collisions[1] + 10
-                        if (agent.target_point == self.target_point) and (agent.steps_since_collisions[1] < self.steps_since_collisions[1] + 10):
+                if distance <= hdist:
+                    if agent.steps_since_collisions[1] + hdist < self.steps_since_collisions[1]:
+                        self.steps_since_collisions[1] = agent.steps_since_collisions[1] + hdist
+                        if (agent.steps_since_collisions[1] < self.steps_since_collisions[1] + hdist):
                             self.turn_towards(agent.x, agent.y)
-                    elif agent.steps_since_collisions[0] + 10 < self.steps_since_collisions[0]:
-                        self.steps_since_collisions[0] = agent.steps_since_collisions[0] + 10
-                        if (agent.target_point == self.target_point) and (
-                                agent.steps_since_collisions[1] < self.steps_since_collisions[1] + 10):
+                    elif agent.steps_since_collisions[0] + hdist < self.steps_since_collisions[0]:
+                        self.steps_since_collisions[0] = agent.steps_since_collisions[0] + hdist
+                        if (
+                                agent.steps_since_collisions[1] < self.steps_since_collisions[1] + hdist):
                             self.turn_towards(agent.x, agent.y)
 
 
